@@ -1,0 +1,19 @@
+{
+  "name": "gog-release-filter--chromium",
+  "version": "0.0.1",
+  "description": "Chrome extension for adding back hidden release date filter options on GoG.com",
+  "main": "main.js",
+  "scripts": {
+    "build": "rm -rf dist && mkdir dist && touch dist/main.min.js dist/main.min.css && npx minify main.js > dist/main.min.js && npx minify main.css > dist/main.min.css && cp manifest.json dist/manifest.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmitchellnet/gog-release-filter-ext-chrome.git"
+  },
+  "author": "Ryan Mitchell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmitchellnet/gog-release-filter-ext-chrome/issues"
+  },
+  "homepage": "https://github.com/rmitchellnet/gog-release-filter-ext-chrome#readme"
+}
