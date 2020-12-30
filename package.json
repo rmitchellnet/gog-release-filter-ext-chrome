@@ -4,7 +4,7 @@
   "description": "Chrome extension for adding back hidden release date filter options on GoG.com",
   "main": "main.js",
   "scripts": {
-    "build": "rm -rf dist && mkdir dist && touch dist/main.min.js dist/main.min.css && npx minify main.js > dist/main.min.js && npx minify main.css > dist/main.min.css && cp manifest.json dist/manifest.json"
+    "build": "rm -rf dist && mkdir dist && touch dist/main.min.js dist/main.min.css && npx minify src/main.js > dist/main.min.js && npx minify src/main.css > dist/main.min.css && cp src/manifest.json dist/manifest.json"
   },
   "repository": {
     "type": "git",

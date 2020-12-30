@@ -1,17 +1,21 @@
-#release-date-filter {
+#release-filter {
     display: block;
     margin-bottom: 20px;
     width: 90%;
 }
 
-#release-date-filter > div {
+#release-filter > div {
     display: block;
-    border: 1px solid rgb(176, 169, 159);
+    border: 1px solid rgb(66, 72, 74);
     border-radius: 10px;
     padding: 10px;
 }
 
-#release-date-filter > div > h5 {
+#release-filter > div.active {
+    border-color: rgb(197, 134, 200);
+}
+
+#release-filter > div > h5 {
     margin: 0;
     margin-bottom: 10px;
     color: rgb(176, 169, 159);
@@ -19,14 +23,18 @@
     line-height: 20px;
 }
 
-#release-date-filter > div > ul {
+#release-filter > div.active > h5 {
+    color: rgb(197, 134, 200);
+}
+
+#release-filter > div > ul {
     list-style: none;
     display: block;
     margin: 0;
     padding: 0;
 }
 
-#release-date-filter > div > ul > li {
+#release-filter > div > ul > li {
     display: block;
     font-size: 12px;
     line-height: 14px;
@@ -36,6 +44,6 @@
     color: rgb(176, 169, 159);
 }
 
-#release-date-filter > div > ul > li.active {
+#release-filter > div > ul > li.active {
     color: rgb(197, 134, 200);
 }

@@ -1,9 +1,9 @@
 const filterContainer = document.getElementsByClassName('catalog__sidebar')[0];
 if(filterContainer) {
     console.log('Adding release date filter...');
-    var releaseDateFilterContainer = document.createElement('div');
-    releaseDateFilterContainer.setAttribute('id', 'release-date-filter');
-    filterContainer.prepend(releaseDateFilterContainer);
+    var releaseFilterContainer = document.createElement('div');
+    releaseFilterContainer.setAttribute('id', 'release-filter');
+    filterContainer.prepend(releaseFilterContainer);
 
     var Filter = function(options) {
         this.options = options;
@@ -21,8 +21,8 @@ if(filterContainer) {
                 if(prop == 'active_filters') {
                     var searchParams = new URLSearchParams(window.location.search);
                     var releaseQueryParam = searchParams.get('release');
-                    console.log('release', releaseQueryParam);
                     if(!obj[prop] && releaseQueryParam) {
+                        console.log('release', releaseQueryParam);
                         obj[prop] = releaseQueryParam;
                     }
                 }
@@ -33,23 +33,23 @@ if(filterContainer) {
                 console.log('set state');
                 obj[prop] = value;
     
-                if(prop == 'active_filters') {
+                if(prop == 'active_filters' && value !== '') {
                     var searchParams = new URLSearchParams(window.location.search);
                     searchParams.set('release', value);
-                    window.location.search = searchParams.toString();
+                    window.location.search = searchParams.toString().replace('%2C', ',');
                     // var newRelativePathQuery = window.location.pathname + '?' + searchParams.toString();
                     // history.pushState(null, '', newRelativePathQuery);
                 }
-    
+                releaseFilter.render();
+
                 return true;
             }
         };
         this.state = new Proxy(this.realState, stateHandler);
     };
 
-    Filter.prototype.render = function() {
-        const that = this;
-        this.elem.innerHTML = this.template(this.data);
+    Filter.prototype.init = function() {
+        var that = this;
         document.addEventListener('click', function(event) {
             if(event.target.matches(that.options.selector + ' ul li')) {
                 console.log(event.target.dataset.id);
@@ -71,14 +71,25 @@ if(filterContainer) {
 
                 const el = event.target;
                 console.log(el);
+            } else if(event.target.matches('.filter__clear-wrapper') && event.target.getAttribute('ng-click').includes('release')) {
+                // filters have been cleared
+                // reset filters
+                // re render
+                Object.assign(that.state, {
+                    active_filters: ''
+                })
             }
         });
     };
 
-    var releaseDateFilter = new Filter({
-        selector: '#release-date-filter',
+    Filter.prototype.render = function() {
+        this.elem.innerHTML = this.template(this.data);
+    };
+
+    var releaseFilter = new Filter({
+        selector: '#release-filter',
         data: {
-            title: 'Release Date',
+            title: 'Release',
             query_var: 'release',
             values: [
                 {
@@ -106,11 +117,11 @@ if(filterContainer) {
         template: function(props) {
             const that = this;
             return `
-                <div>
+                <div ${that.state.active_filters ? 'class="active"' : ''}>
                     <h5>${props.title}</h5>
                     <ul>
                         ${props.values.map(function(value) {
-                            return `<li ${that.state.active_filters.includes(value.id) ? 'class="active"' : ''}' data-id='${value.id}'>${value.label}</li>`
+                            return `<li ${that.state.active_filters.includes(value.id) ? 'class="active"' : ''} data-id='${value.id}'>${value.label}</li>`
                         }).join('')}
                     </ul>
                 </div>
@@ -118,5 +129,6 @@ if(filterContainer) {
         }
     });
 
-    releaseDateFilter.render();
+    releaseFilter.init();
+    releaseFilter.render();
 }
