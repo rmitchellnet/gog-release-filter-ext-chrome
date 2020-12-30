@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "GOG Release Date Filter",
+    "name": "GOG.com Release Date Filter",
     "version": "0.1",
     "content_scripts": [{
       "matches": ["http://www.gog.com/*", "https://www.gog.com/*"],
