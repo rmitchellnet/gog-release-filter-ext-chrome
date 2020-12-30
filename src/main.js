@@ -16,13 +16,10 @@ if(filterContainer) {
 
         var stateHandler = {
             get: function(obj, prop) {
-                console.log('get state');
-
                 if(prop == 'active_filters') {
                     var searchParams = new URLSearchParams(window.location.search);
                     var releaseQueryParam = searchParams.get('release');
                     if(!obj[prop] && releaseQueryParam) {
-                        console.log('release', releaseQueryParam);
                         obj[prop] = releaseQueryParam;
                     }
                 }
@@ -30,7 +27,6 @@ if(filterContainer) {
                 return obj[prop];
             },
             set: function(obj, prop, value) {
-                console.log('set state');
                 obj[prop] = value;
     
                 if(prop == 'active_filters' && value !== '') {
@@ -52,7 +48,6 @@ if(filterContainer) {
         var that = this;
         document.addEventListener('click', function(event) {
             if(event.target.matches(that.options.selector + ' ul li')) {
-                console.log(event.target.dataset.id);
                 const removeItemPattern = new RegExp(`,?${event.target.dataset.id},?`, 'gi');
                 const trimDelimitersPattern = new RegExp('^,|,$', 'g');
                 var updatedActiveFilters = '';
@@ -67,14 +62,8 @@ if(filterContainer) {
                     active_filters: updatedActiveFilters
                 });
 
-                console.log('state', that.state);
-
                 const el = event.target;
-                console.log(el);
             } else if(event.target.matches('.filter__clear-wrapper') && event.target.getAttribute('ng-click').includes('release')) {
-                // filters have been cleared
-                // reset filters
-                // re render
                 Object.assign(that.state, {
                     active_filters: ''
                 })
